@@ -1,0 +1,183 @@
+{
+  "selected_model": "lightgbm_tuned",
+  "model_type": "lightgbm",
+  "model_params": {
+    "subsample_freq": 1,
+    "class_weight": "balanced",
+    "n_jobs": 1,
+    "verbose": -1,
+    "random_state": 42,
+    "n_estimators": 100,
+    "learning_rate": 0.04864081635587356,
+    "num_leaves": 61,
+    "min_child_samples": 100,
+    "subsample": 0.6,
+    "colsample_bytree": 0.6,
+    "reg_alpha": 9.098078973155667,
+    "reg_lambda": 0.03058374649808381
+  },
+  "monotonic_constraints": {
+    "debt_to_equity_ratio": 1,
+    "leverage_liquidity_ratio": 1,
+    "current_ratio": -1,
+    "profit_margin": -1,
+    "years_operating": -1
+  },
+  "calibration_method": "sigmoid",
+  "decision_threshold": 0.19,
+  "cost_assumptions": {
+    "false_positive_cost": 1.0,
+    "false_negative_cost": 5.0
+  },
+  "test_metrics": {
+    "average_precision": {
+      "value": 0.21932731207508002,
+      "ci95": [
+        0.1264163994739311,
+        0.3658754764414324
+      ]
+    },
+    "roc_auc": {
+      "value": 0.7361538461538462,
+      "ci95": [
+        0.6447439406168219,
+        0.8209360324172873
+      ]
+    },
+    "precision": {
+      "value": 0.19736842105263158,
+      "ci95": [
+        0.11267165492957747,
+        0.29333333333333333
+      ]
+    },
+    "recall": {
+      "value": 0.375,
+      "ci95": [
+        0.23071428571428573,
+        0.5405984555984555
+      ]
+    },
+    "f1": {
+      "value": 0.25862068965517243,
+      "ci95": [
+        0.15384615384615385,
+        0.368
+      ]
+    },
+    "balanced_accuracy": {
+      "value": 0.6353632478632478,
+      "ci95": [
+        0.5619948040013897,
+        0.7218059730366573
+      ]
+    },
+    "brier_score": {
+      "value": 0.056528444101883624,
+      "ci95": [
+        0.04298781714034532,
+        0.07153712377915948
+      ]
+    }
+  },
+  "test_rows": 625,
+  "test_positives": 40,
+  "data_sha256": "59ac2d0ec143b5a3d0a19b14762f58548c2c52392e0f9ea80ba99aa92a9f06da",
+  "versions": {
+    "python": "3.12.13",
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "lightgbm": "4.7.0",
+    "catboost": "1.2.10"
+  },
+  "random_seed": 42,
+  "trained_on": "synthetic data only",
+  "config": {
+    "random_seed": 42,
+    "dataset": {
+      "raw_csv_path": "data/raw/business_outcomes.csv",
+      "test_size": 0.25
+    },
+    "preprocessing": {
+      "outlier_lower_quantile": 0.01,
+      "outlier_upper_quantile": 0.99
+    },
+    "cross_validation": {
+      "n_splits": 5,
+      "n_repeats": 3,
+      "n_jobs": -1
+    },
+    "tournament": {
+      "model_configs": [
+        "configs/hist_gradient_boosting.yaml",
+        "configs/xgboost.yaml",
+        "configs/xgboost_monotonic.yaml",
+        "configs/xgboost_tuned.yaml",
+        "configs/lightgbm.yaml",
+        "configs/lightgbm_monotonic.yaml",
+        "configs/lightgbm_tuned.yaml",
+        "configs/catboost.yaml",
+        "configs/logistic_regression.yaml"
+      ]
+    },
+    "cost_matrix": {
+      "false_positive_cost": 1.0,
+      "false_negative_cost": 5.0
+    },
+    "threshold": {
+      "grid_min": 0.01,
+      "grid_max": 0.99,
+      "grid_steps": 99
+    },
+    "calibration": {
+      "methods": [
+        "none",
+        "sigmoid",
+        "isotonic"
+      ],
+      "cv_folds": 5
+    },
+    "evaluation": {
+      "bootstrap_rounds": 1000,
+      "confidence_level": 95.0
+    },
+    "subgroups": {
+      "columns": [
+        "state",
+        "industry"
+      ],
+      "min_group_size": 50,
+      "min_positives": 5
+    },
+    "drift": {
+      "psi_moderate": 0.1,
+      "psi_critical": 0.25,
+      "ks_alpha": 0.01
+    },
+    "interpretability": {
+      "background_size": 200,
+      "explain_sample_size": 625
+    },
+    "learning_curve": {
+      "train_sizes": [
+        500,
+        1000,
+        2500,
+        10000,
+        50000
+      ],
+      "test_rows": 100000,
+      "repeats": 5,
+      "test_seed": 10000,
+      "train_seed_start": 20000,
+      "model_configs": [
+        "configs/logistic_regression.yaml",
+        "configs/lightgbm.yaml",
+        "configs/lightgbm_monotonic.yaml",
+        "configs/lightgbm_tuned.yaml"
+      ]
+    }
+  }
+}

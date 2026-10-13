@@ -1,0 +1,13 @@
+model_type: lightgbm
+role: candidate
+params:
+  n_estimators: 200
+  learning_rate: 0.04
+  num_leaves: 31
+  subsample: 0.8
+  subsample_freq: 1          # Required for row subsampling to take effect in LightGBM
+  colsample_bytree: 0.8
+  class_weight: "balanced"
+  n_jobs: 1
+  verbose: -1
+  random_state: 42

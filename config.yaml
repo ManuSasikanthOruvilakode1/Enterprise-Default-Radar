@@ -1,0 +1,76 @@
+# Enterprise Default Radar configuration.
+# All paths are relative to the project root.
+
+random_seed: 42
+
+dataset:
+  raw_csv_path: "data/raw/business_outcomes.csv"
+  test_size: 0.25            # Final held-out test set, scored once after all choices are fixed
+
+preprocessing:
+  outlier_lower_quantile: 0.01
+  outlier_upper_quantile: 0.99
+
+cross_validation:
+  n_splits: 5
+  n_repeats: 3               # Repeated stratified K-fold; identical splits for every candidate
+  n_jobs: -1                 # Folds run in parallel; each is seeded, so results do not depend on this
+
+tournament:
+  # Model configs compared in the tournament. Role "reference" models are reported but not selectable.
+  model_configs:
+    - "configs/hist_gradient_boosting.yaml"
+    - "configs/xgboost.yaml"
+    - "configs/xgboost_monotonic.yaml"
+    - "configs/xgboost_tuned.yaml"       # Nested Optuna search inside each training fold
+    - "configs/lightgbm.yaml"
+    - "configs/lightgbm_monotonic.yaml"
+    - "configs/lightgbm_tuned.yaml"      # Nested Optuna search inside each training fold
+    - "configs/catboost.yaml"
+    - "configs/logistic_regression.yaml"
+
+cost_matrix:
+  # Illustrative assumptions, not measured real-world costs.
+  false_positive_cost: 1.0   # Unnecessary review of a healthy business
+  false_negative_cost: 5.0   # Missed business that becomes insolvent
+
+threshold:
+  grid_min: 0.01
+  grid_max: 0.99
+  grid_steps: 99
+
+calibration:
+  methods: ["none", "sigmoid", "isotonic"]
+  cv_folds: 5
+
+evaluation:
+  bootstrap_rounds: 1000
+  confidence_level: 95.0
+
+subgroups:
+  columns: ["state", "industry"]
+  min_group_size: 50         # Groups below these sizes are reported but excluded from disparity summaries
+  min_positives: 5
+
+drift:
+  psi_moderate: 0.10
+  psi_critical: 0.25
+  ks_alpha: 0.01
+
+interpretability:
+  background_size: 200
+  explain_sample_size: 625
+
+learning_curve:
+  # Separate experiment (scripts/run_learning_curve.py): fresh synthetic samples of each size are
+  # drawn from the same generator and scored on one large independent test sample.
+  train_sizes: [500, 1000, 2500, 10000, 50000]
+  test_rows: 100000
+  repeats: 5
+  test_seed: 10000
+  train_seed_start: 20000
+  model_configs:
+    - "configs/logistic_regression.yaml"
+    - "configs/lightgbm.yaml"
+    - "configs/lightgbm_monotonic.yaml"
+    - "configs/lightgbm_tuned.yaml"

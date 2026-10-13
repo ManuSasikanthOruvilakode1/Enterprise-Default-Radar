@@ -1,0 +1,18 @@
+# Monotonic XGBoost with an Optuna search run inside each training set (nested CV).
+# Sampled values (see src/tuning.py) override the defaults below; fixed settings stay as listed.
+model_type: xgboost
+role: candidate
+params:
+  eval_metric: "logloss"
+  n_jobs: 1
+  random_state: 42
+# Domain knowledge: risk can only rise with leverage and only fall with liquidity, margin and firm age.
+monotonic_constraints:
+  debt_to_equity_ratio: 1
+  leverage_liquidity_ratio: 1
+  current_ratio: -1
+  profit_margin: -1
+  years_operating: -1
+tuning:
+  n_trials: 30
+  inner_folds: 3

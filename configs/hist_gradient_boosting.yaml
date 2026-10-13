@@ -1,0 +1,9 @@
+# Existing baseline model
+model_type: hist_gradient_boosting
+role: baseline
+params:
+  learning_rate: 0.04
+  max_iter: 150
+  max_depth: 5
+  class_weight: "balanced"
+  random_state: 42

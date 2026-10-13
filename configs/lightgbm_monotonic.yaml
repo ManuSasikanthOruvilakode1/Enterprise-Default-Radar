@@ -1,0 +1,21 @@
+# Default LightGBM settings plus monotonic constraints (no tuning).
+model_type: lightgbm
+role: candidate
+params:
+  n_estimators: 200
+  learning_rate: 0.04
+  num_leaves: 31
+  subsample: 0.8
+  subsample_freq: 1          # Required for row subsampling to take effect in LightGBM
+  colsample_bytree: 0.8
+  class_weight: "balanced"
+  n_jobs: 1
+  verbose: -1
+  random_state: 42
+# Domain knowledge: risk can only rise with leverage and only fall with liquidity, margin and firm age.
+monotonic_constraints:
+  debt_to_equity_ratio: 1
+  leverage_liquidity_ratio: 1
+  current_ratio: -1
+  profit_margin: -1
+  years_operating: -1

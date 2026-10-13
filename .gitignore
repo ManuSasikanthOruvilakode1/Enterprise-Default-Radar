@@ -1,0 +1,34 @@
+# Environment
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build output
+build/
+dist/
+*.egg-info/
+
+# Trained model artifacts (recreate with: uv run python scripts/run_pipeline.py)
+models/*.joblib
+models/*_metadata.json
+
+# Library scratch files
+catboost_info/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Batch scoring outputs
+*_scored.csv
+
+# Tool caches
+.ruff_cache/
+
+# Internal working notes (not part of the published project)
+RULES.md

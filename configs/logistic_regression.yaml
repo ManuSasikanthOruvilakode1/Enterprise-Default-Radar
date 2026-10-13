@@ -1,0 +1,7 @@
+# Linear reference model: reported for context, not eligible for selection.
+model_type: logistic_regression
+role: reference
+params:
+  C: 1.0
+  class_weight: "balanced"
+  max_iter: 2000

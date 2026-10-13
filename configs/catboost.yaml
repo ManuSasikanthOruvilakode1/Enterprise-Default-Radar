@@ -1,0 +1,11 @@
+model_type: catboost
+role: candidate
+params:
+  iterations: 300
+  learning_rate: 0.05
+  depth: 6
+  auto_class_weights: "Balanced"
+  thread_count: 1
+  verbose: 0
+  allow_writing_files: false
+  random_seed: 42

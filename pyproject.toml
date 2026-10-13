@@ -1,0 +1,57 @@
+[project]
+name = "enterprise-default-radar"
+version = "1.0.0"
+description = "Gradient-boosting pipeline for business insolvency risk with cost-sensitive thresholds, calibration, SHAP explanations and drift monitoring."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.4.0",
+    "scipy>=1.10.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.0.0",
+    "matplotlib>=3.7.0",
+    "joblib>=1.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.6.0",
+]
+advanced = [
+    "xgboost>=2.0.0",
+    "lightgbm>=4.1.0",
+    "catboost>=1.2.0",
+    "shap>=0.44.0",
+    "optuna>=3.6.0",
+]
+app = [
+    "streamlit>=1.40.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 160
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = [
+    "E402",   # scripts add the project root to sys.path before importing src
+    "E731",   # small lambdas are used for bootstrap statistics
+    "UP006", "UP007", "UP035", "UP045",  # keep typing.Dict/Optional style used throughout
+]
